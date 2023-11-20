@@ -53,19 +53,23 @@ def menu():
 def game():
     image = pygame.image.load('Assets/space.png')
     image = pygame.transform.scale(image, (640, 480))
-    player_rect = pygame.Rect(50, 50, 50, 50)
-
+    # player_rect = pygame.Rect(50, 50, 50, 50)
+    player = pygame.image.load('Assets/spaceship_red.png')
+    player = pygame.transform.rotozoom(player,0,0.1)
+    player = pygame.transform.rotate(player, -90)
     bgx = 0
     while True:
         screen.blit(image, (bgx-640, 0))
         screen.blit(image, (bgx, 0))
         screen.blit(image, (bgx+640, 0))
 
-        bgx = bgx - 1
-        if bgx <= -640:
+        bgx = bgx - 2
+        if bgx <= -640 or bgx >= 640:
             bgx=0
 
-        pygame.draw.rect(screen, (255, 0, 5), player_rect)
+        screen.blit(player, (50, 325))
+
+        # pygame.draw.rect(screen, (255, 0, 5), player_rect)
 
         pygame.display.flip()
 
