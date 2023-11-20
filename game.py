@@ -55,9 +55,17 @@ def game():
     image = pygame.transform.scale(image, (640, 480))
     player_rect = pygame.Rect(50, 50, 50, 50)
 
+    bgx = 0
     while True:
-        screen.blit(image, (0, 0))
-        pygame.draw.rect(screen, (255, 0, 0), player_rect)
+        screen.blit(image, (bgx-640, 0))
+        screen.blit(image, (bgx, 0))
+        screen.blit(image, (bgx+640, 0))
+
+        bgx = bgx - 1
+        if bgx <= -640:
+            bgx=0
+
+        pygame.draw.rect(screen, (255, 0, 5), player_rect)
 
         pygame.display.flip()
 
