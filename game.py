@@ -9,9 +9,10 @@ font = pygame.font.Font(None, 36)
 
 
 class Button:
-    def __init__(self, text, position):
+    def __init__(self, text, position, name):
         self.text = text
         self.position = position
+        self.name = name
         self.rendered_text = font.render(self.text, True, white)
         self.rect = self.rendered_text.get_rect(topleft=position)
 
@@ -26,9 +27,9 @@ def menu():
     image = pygame.transform.scale(image, (640, 480))
 
     buttons = [
-        Button("START", (10, 10)),
-        Button("PLAY", (100, 10)),
-        Button("STOP", (200, 10))
+        Button("START", (10, 10), "START"),
+        Button("PLAY", (100, 10), "PLAY"),
+        Button("STOP", (200, 10), "STOP")
     ]
     while True:
         screen.blit(image, (0, 0))
@@ -44,20 +45,30 @@ def menu():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 for button in buttons:
                     if button.is_clicked(event.pos):
-                        print(f'Clicked {button.text}')
+                        if button.name == "START":
+                            game()
+                        else:
+                            print(f'Clicked {button.text}')
 
-# def game():
-#     image = pygame.image.load('Assets/space.png')
-#     image = pygame.transform.scale(image, (640, 480))
-#     while True:
-#         screen.blit(image, (0, 0))
-#         pygame.display.update()
-#         for event in pygame.event.get():
-#             if event.type == pygame.QUIT:
-#                 pygame.display.quit()
-#                 exit()
-#             if event.type == pygame.MOUSEBUTTONDOWN:
-#                 if event.pos[0] in range(300, 325)\
-#                 and event.pos[1] in range(200, 228):
-#                     print('play')
+def game():
+    image = pygame.image.load('Assets/space.png')
+    image = pygame.transform.scale(image, (640, 480))
+    player_rect = pygame.Rect(50, 50, 50, 50)
+
+    while True:
+        screen.blit(image, (0, 0))
+        pygame.draw.rect(screen, (255, 0, 0), player_rect)
+
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.display.quit()
+                exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    print('jump')
+
+        pygame.time.Clock().tick(60)
+
 menu()
