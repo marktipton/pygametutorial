@@ -1,4 +1,5 @@
 import pygame
+from pygame.locals import *
 
 pygame.init()
 white = (255, 255, 255)
@@ -60,6 +61,10 @@ def game():
     player_pos = pygame.Vector2(50, 325)
     bgx = 0
     player_speed = 5
+    # add key states for continuous movement when holding down key
+    x = 100
+    y = 100
+
     while True:
         screen.blit(image, (bgx-640, 0))
         screen.blit(image, (bgx, 0))
@@ -69,7 +74,7 @@ def game():
         if bgx <= -640 or bgx >= 640:
             bgx=0
 
-        screen.blit(player, player_pos)
+        screen.blit(player, (x, y))
 
         # pygame.draw.rect(screen, (255, 0, 5), player_rect)
 
@@ -79,13 +84,36 @@ def game():
             if event.type == pygame.QUIT:
                 pygame.display.quit()
                 exit()
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    print('jump')
-                elif event.key == pygame.K_UP:
-                    player_pos.y -= player_speed
-                elif event.key == pygame.K_DOWN:
-                    player_pos.y += player_speed
+            # elif event.type == pygame.KEYDOWN:
+            #     if event.key == pygame.K_SPACE:
+            #         print('jump')
+            #     if event.key == pygame.K_LEFT:
+            #         x -= player_speed
+            #     if event.key == pygame.K_RIGHT:
+            #         x += player_speed
+            #     if event.key == pygame.K_UP:
+            #         y -= player_speed
+            #     if event.key == pygame.K_DOWN:
+            #         y += player_speed
+
+            # Storing the key pressed in a
+        # new variable using key.get_pressed()
+        # method
+        key_pressed_is = pygame.key.get_pressed()
+
+        # Changing the coordinates
+        # of the player
+        if key_pressed_is[K_LEFT]:
+            x -= 8
+        if key_pressed_is[K_RIGHT]:
+            x += 8
+        if key_pressed_is[K_UP]:
+            y -= 8
+        if key_pressed_is[K_DOWN]:
+            y += 8
+
+        # Draws the surface object to the screen.
+        pygame.display.update()
 
         pygame.time.Clock().tick(60)
 
