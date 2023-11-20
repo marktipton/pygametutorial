@@ -57,7 +57,9 @@ def game():
     player = pygame.image.load('Assets/spaceship_red.png')
     player = pygame.transform.rotozoom(player,0,0.1)
     player = pygame.transform.rotate(player, -90)
+    player_pos = pygame.Vector2(50, 325)
     bgx = 0
+    player_speed = 5
     while True:
         screen.blit(image, (bgx-640, 0))
         screen.blit(image, (bgx, 0))
@@ -67,7 +69,7 @@ def game():
         if bgx <= -640 or bgx >= 640:
             bgx=0
 
-        screen.blit(player, (50, 325))
+        screen.blit(player, player_pos)
 
         # pygame.draw.rect(screen, (255, 0, 5), player_rect)
 
@@ -80,6 +82,10 @@ def game():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     print('jump')
+                elif event.key == pygame.K_UP:
+                    player_pos.y -= player_speed
+                elif event.key == pygame.K_DOWN:
+                    player_pos.y += player_speed
 
         pygame.time.Clock().tick(60)
 
